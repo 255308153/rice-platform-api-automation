@@ -2,7 +2,7 @@
 
 轻量级接口自动化测试骨架，基于 `pytest + requests`，用于助农大米平台 API 回归。
 最近一次本地执行统计见：`EXECUTION_RESULT.md`。
-当前共维护 `52` 条接口用例（最新执行：`52 passed / 2 skipped`）。
+当前持续维护核心接口自动化用例，支持本地回归与 CI 冒烟执行。
 
 ## 目录结构
 
@@ -79,7 +79,7 @@ python3 -m pytest
 - `PUT /api/orders/{id}/pay`、`POST /api/orders/{id}/refund`：异常路径守卫校验（不存在订单）
 - `GET /api/addresses`、`POST /api/addresses`、`DELETE /api/addresses/{id}`：地址列表与增删回归
 - `GET /api/posts`、`GET /api/posts/categories`：论坛列表与分类查询
-- `GET /api/shops`：店铺列表与详情（当前存在后端序列化缺陷，已纳入跳过说明）
+- `GET /api/shops`：店铺列表与详情（已恢复强断言）
 - `GET /api/ai/chat/health`、`GET /api/ai/recognition/health`：AI 服务健康检查
 - `POST /api/ai/chat`、`GET /api/ai/chat/history`、`GET /api/ai/recognition/history`：AI 会话与历史查询
 - `GET /api/admin/users`：多角色权限校验（USER 拒绝、ADMIN 允许）
@@ -139,8 +139,14 @@ python3 -m pytest -m smoke
 4. 推送代码到 `main/master`，或在 Actions 页面手动执行 `API Smoke Tests`。  
 5. 运行完成后在 Workflow 的 `Artifacts` 下载 `allure-results`，本地执行 `allure serve` 查看报告。
 
+## 近期修复
+
+- 修复后端 `GET /api/products` 分页查询缓存 key 空值场景问题，恢复列表强断言。
+- 修复后端 `GET /api/shops` Redis 反序列化类型丢失问题，恢复列表与详情强断言。
+- 新增 `shops` 列表 JSON Schema：`schemas/shops_list_success.json`。
+- 定向验证通过：`python3 -m pytest -q testcase/test_products.py testcase/test_shops.py`。
+
 ## 下一步扩展建议
 
 - 增加下单创建、退款申请、审核处理等“写操作”链路用例
-- 对已知后端缺陷（`/api/products`、`/api/shops`）修复后恢复强断言
 - 补充 CI 环境数据库校验策略（测试库隔离 + 数据回滚）

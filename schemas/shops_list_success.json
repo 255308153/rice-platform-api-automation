@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["code", "message", "data"],
+  "properties": {
+    "code": {
+      "type": "integer",
+      "const": 200
+    },
+    "message": {
+      "type": "string",
+      "const": "success"
+    },
+    "data": {
+      "type": "object",
+      "required": ["records", "total", "size", "current", "pages"],
+      "properties": {
+        "records": {
+          "type": "array"
+        },
+        "total": {
+          "type": ["integer", "number"]
+        },
+        "size": {
+          "type": ["integer", "number"]
+        },
+        "current": {
+          "type": ["integer", "number"]
+        },
+        "pages": {
+          "type": ["integer", "number"]
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
