@@ -10,16 +10,16 @@
 - 执行命令：`python3 -m pytest --alluredir=allure-results --clean-alluredir --disable-warnings -ra`
 - 执行结果：`70 passed / 0 failed / 0 skipped`
 
-Allure 报告截图（Suites 视图）：
+Allure 报告截图（Overview 首页）：
 
-![Allure Suites](assets/allure-suites.png)
+![Allure Overview](assets/allure-overview.png)
 
 ## 目录结构
 
 ```text
 test_rice_platform_api/
 ├── assets/
-│   └── allure-suites.png
+│   └── allure-overview.png
 ├── clients/
 │   ├── api_client.py
 │   └── db_client.py
