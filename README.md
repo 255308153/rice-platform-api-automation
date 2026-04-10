@@ -129,6 +129,16 @@ python3 -m pytest -m smoke
 - `RICE_API_MERCHANT_USERNAME`（可选）
 - `RICE_API_MERCHANT_PASSWORD`（可选）
 
+### self-hosted Runner 使用说明
+
+当前工作流已切换为 `runs-on: self-hosted`，适合在本机或内网机器直接访问 `http://localhost:8080` 的测试环境。
+
+1. 在 GitHub 仓库进入 `Settings -> Actions -> Runners -> New self-hosted runner`。  
+2. 按页面命令在你的机器上安装并启动 Runner（建议常驻运行）。  
+3. 确保 Runner 所在机器可访问 `RICE_API_BASE_URL`，并且后端服务、数据库等依赖已启动。  
+4. 推送代码到 `main/master`，或在 Actions 页面手动执行 `API Smoke Tests`。  
+5. 运行完成后在 Workflow 的 `Artifacts` 下载 `allure-results`，本地执行 `allure serve` 查看报告。
+
 ## 下一步扩展建议
 
 - 增加下单创建、退款申请、审核处理等“写操作”链路用例
