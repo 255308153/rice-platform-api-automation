@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["code", "message", "data"],
+  "properties": {
+    "code": {
+      "type": "integer",
+      "const": 200
+    },
+    "message": {
+      "type": "string",
+      "const": "success"
+    },
+    "data": {
+      "type": "object",
+      "required": ["token"],
+      "properties": {
+        "token": {
+          "type": "string",
+          "minLength": 10
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

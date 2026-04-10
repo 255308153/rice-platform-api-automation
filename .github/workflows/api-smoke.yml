@@ -1,0 +1,45 @@
+name: API Smoke Tests
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+
+    env:
+      RICE_API_BASE_URL: ${{ secrets.RICE_API_BASE_URL }}
+      RICE_API_TIMEOUT: "10"
+      RICE_API_USER_USERNAME: ${{ secrets.RICE_API_USER_USERNAME }}
+      RICE_API_USER_PASSWORD: ${{ secrets.RICE_API_USER_PASSWORD }}
+      RICE_API_ADMIN_USERNAME: ${{ secrets.RICE_API_ADMIN_USERNAME }}
+      RICE_API_ADMIN_PASSWORD: ${{ secrets.RICE_API_ADMIN_PASSWORD }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run smoke tests
+        run: |
+          python -m pytest -m smoke --alluredir=allure-results
+
+      - name: Upload allure raw results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results

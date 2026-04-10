@@ -1,0 +1,17 @@
+- case_name: 用户不存在
+  username: not_exists_user_2026
+  password: "123456"
+  expected_code: 500
+  expected_message_contains: 用户名或密码错误
+
+- case_name: 密码错误
+  username: testuser1
+  password: wrong_password
+  expected_code: 500
+  expected_message_contains: 用户名或密码错误
+
+- case_name: 用户名密码为空
+  username: ""
+  password: ""
+  expected_code: 500
+  expected_message_contains: 用户名或密码错误
