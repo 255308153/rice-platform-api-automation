@@ -4,16 +4,29 @@
 最近一次本地执行统计见：`EXECUTION_RESULT.md`。
 当前持续维护核心接口自动化用例，支持本地回归与 CI 冒烟执行。
 
+## 最新执行结果
+
+- 执行时间：`2026-04-10`
+- 执行命令：`python3 -m pytest --alluredir=allure-results --clean-alluredir --disable-warnings -ra`
+- 执行结果：`70 passed / 0 failed / 0 skipped`
+
+Allure 报告截图（Suites 视图）：
+
+![Allure Suites](assets/allure-suites.png)
+
 ## 目录结构
 
 ```text
 test_rice_platform_api/
+├── assets/
+│   └── allure-suites.png
 ├── clients/
 │   ├── api_client.py
 │   └── db_client.py
 ├── schemas/
 │   ├── auth_login_success.json
 │   ├── products_list_success.json
+│   ├── shops_list_success.json
 │   └── user_info_success.json
 ├── testcase/
 │   ├── test_addresses.py
@@ -145,8 +158,3 @@ python3 -m pytest -m smoke
 - 修复后端 `GET /api/shops` Redis 反序列化类型丢失问题，恢复列表与详情强断言。
 - 新增 `shops` 列表 JSON Schema：`schemas/shops_list_success.json`。
 - 定向验证通过：`python3 -m pytest -q testcase/test_products.py testcase/test_shops.py`。
-
-## 下一步扩展建议
-
-- 增加下单创建、退款申请、审核处理等“写操作”链路用例
-- 补充 CI 环境数据库校验策略（测试库隔离 + 数据回滚）
